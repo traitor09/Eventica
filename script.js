@@ -379,3 +379,61 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const cards = document.querySelectorAll(".event-card");
+
+  cards.forEach(card => {
+    if (card.querySelector(".share-wrapper")) return;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "share-wrapper";
+
+    const iconBtn = document.createElement("button");
+    iconBtn.className = "share-icon";
+    iconBtn.innerHTML = '<i class="fas fa-share-alt"></i>';
+
+    const bar = document.createElement("div");
+    bar.className = "share-bar";
+
+    // ✅ GET THE FIRST ANCHOR INSIDE THE CARD
+    const anchor = card.querySelector("a");
+    const eventURL = anchor ? encodeURIComponent(anchor.href) : encodeURIComponent(window.location.href);
+
+    bar.innerHTML = `
+      <a class="share-link whatsapp" href="https://wa.me/?text=${eventURL}" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a class="share-link instagram" href="https://www.instagram.com/?url=${eventURL}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a class="share-link twitter" href="https://twitter.com/intent/tweet?url=${eventURL}" target="_blank" title="Twitter"><i class="fab fa-x-twitter"></i></a>
+      <a class="share-link linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=${eventURL}" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <button class="share-link copy" title="Copy"><i class="fas fa-copy"></i></button>
+    `;
+
+    wrapper.appendChild(iconBtn);
+    wrapper.appendChild(bar);
+    card.appendChild(wrapper);
+
+    // Toggle bar
+    iconBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      bar.classList.toggle("active");
+    });
+
+    // Outside click to close
+    document.addEventListener("click", e => {
+      if (!wrapper.contains(e.target)) {
+        bar.classList.remove("active");
+      }
+    });
+
+    // Copy to clipboard
+    const copyBtn = bar.querySelector(".copy");
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(anchor ? anchor.href : window.location.href).then(() => {
+        copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => {
+          copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+        }, 1500);
+      });
+    });
+  });
+});
