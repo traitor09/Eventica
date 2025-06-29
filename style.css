@@ -745,6 +745,81 @@ body.dark-mode footer {
     visibility: visible;
 }
 
+/* Container for share button & bar */
+.share-wrapper {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+}
+
+/* Circle share button */
+.share-icon {
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  color: white;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.share-icon:hover {
+  background-color: #686969;
+}
+
+/* Share bar */
+.share-bar {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  display: flex;
+  background: white;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  gap: 8px;
+  padding: 6px 10px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.share-bar.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(4px);
+}
+
+.share-link {
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+.share-link:hover {
+  background-color: #eee;
+}
+
+@media (max-width: 768px) {
+  .share-bar {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+
 /* Testimonials Section Css */
 
 .testimonials {
